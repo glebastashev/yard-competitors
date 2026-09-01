@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ярд — три решения для блока разбора</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#F4F3F0;--surface:#FFFFFF;--ink:#141414;--muted:#6F6B63;--faint:#908A80;
+    --line:#E4DED3;--accent:#EE6B24;--accent-dark:#BF4F16;--soft:#FFF3EA;--graphite:#1A1916}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px}
+  /* шапка страницы */
+  .top{background:var(--graphite);color:#EDE9DF;padding:34px 0 30px}
+  .top h1{font-size:32px;font-weight:900;letter-spacing:-.02em;color:#fff}
+  .top h1 b{color:var(--accent)}
+  .top p{color:#B7B2A6;font-size:15px;margin-top:8px;max-width:70ch}
+  /* обёртка варианта */
+  .vari{padding:46px 0 10px}
+  .vlab{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+  .vlab .chip{background:var(--graphite);color:#fff;font-size:12px;font-weight:800;padding:6px 12px;border-radius:8px}
+  .vlab h2{font-size:23px;font-weight:900;letter-spacing:-.015em}
+  .vdesc{color:var(--muted);font-size:14.5px;margin-bottom:22px;max-width:76ch}
+  .stage{background:var(--paper);border:1px dashed #D4CDBF;border-radius:30px;padding:34px 30px 40px}
+  /* общий степпер-контекст */
+  .eyebrow{display:inline-block;color:var(--accent);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:12px}
+  .eyebrow::before{content:"";display:inline-block;width:22px;height:2px;background:var(--accent);vertical-align:middle;margin-right:10px}
+  .h2big{font-size:clamp(1.9rem,3.2vw,2.7rem);font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:24px}
+  .funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;position:relative}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1.3rem 1.25rem 1.4rem;position:relative}
+  .stepno{display:block;font-weight:900;font-size:1.75rem;line-height:1;color:var(--accent);margin-bottom:.55rem}
+  .step h3{font-size:1.05rem;font-weight:800;margin-bottom:.35rem}
+  .step p{font-size:.87rem;color:#45423C}
+  .step:not(:last-child)::after{content:"→";position:absolute;right:-1rem;top:50%;transform:translateY(-50%);
+    width:1.35rem;text-align:center;color:var(--accent);font-weight:900;z-index:2}
+  .step.dark{background:var(--graphite);border-color:var(--graphite)}
+  .step.dark h3{color:#fff}.step.dark p{color:#CFC9BE}.step.dark .stepno{color:#FF7A2D}
+
+  /* ─── В1: мини-отчёт ─── */
+  .v1note{margin:22px 0 20px;border-left:3px solid var(--accent);padding-left:14px;
+    font-size:.97rem;color:var(--muted);max-width:66ch}
+  .repcard{background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden;max-width:none}
+  .rephead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    padding:1.25rem 1.6rem;border-bottom:1px solid var(--line)}
+  .rephead .t{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--faint)}
+  .rephead .n{font-size:1.35rem;font-weight:900;letter-spacing:-.01em}
+  .rephead .p{font-size:1.35rem;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums}
+  .replist{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .repline{display:flex;gap:.75rem;align-items:flex-start;padding:.95rem 1.6rem;border-bottom:1px solid var(--line)}
+  .repline:nth-child(odd){border-right:1px solid var(--line)}
+  .repline .mk{flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900;margin-top:1px}
+  .mk.plus{background:#E8F3EC;color:#2E7D52}
+  .mk.minus{background:var(--soft);color:var(--accent-dark)}
+  .repline span{font-size:.93rem;color:#3A362E}
+  .repfoot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:1.15rem 1.6rem}
+  .repfoot b{font-size:1rem;font-weight:800}
+  .lnk{color:var(--accent-dark);font-weight:800;font-size:.95rem;text-decoration:none;border-bottom:2px solid rgba(238,107,36,.4);padding-bottom:1px}
+
+  /* ─── В2: раскрытая ступень ─── */
+  .v2wrap{position:relative;margin-top:0}
+  .v2conn{height:34px;position:relative}
+  .v2conn::before{content:"";position:absolute;left:calc(62.5% - 1px);top:0;bottom:0;width:2px;background:var(--accent);opacity:.55}
+  .v2conn::after{content:"";position:absolute;left:calc(62.5% - 5px);bottom:-1px;width:10px;height:10px;
+    border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);opacity:.55}
+  .v2box{display:grid;grid-template-columns:.9fr 1.1fr;gap:0;background:var(--surface);
+    border:1px solid var(--line);border-radius:24px;overflow:hidden}
+  .v2left{padding:1.7rem 1.7rem;background:var(--soft);border-right:1px solid var(--line)}
+  .v2left .k{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--accent-dark);margin-bottom:.6rem}
+  .v2left p{font-size:.98rem;color:#3A362E}
+  .v2right{padding:1.7rem 1.7rem}
+  .v2right .k{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--faint);margin-bottom:.6rem}
+  .v2obj{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.85rem}
+  .v2obj b{font-size:1.25rem;font-weight:900}
+  .v2obj i{font-style:normal;font-size:1.05rem;font-weight:800;color:var(--accent)}
+  .tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem}
+  .tag{font-size:.83rem;font-weight:700;padding:.35rem .7rem;border-radius:999px;border:1px solid var(--line)}
+  .tag.ok{background:#EFF6F1;border-color:#CFE4D8;color:#2E7D52}
+  .tag.no{background:var(--soft);border-color:rgba(238,107,36,.35);color:var(--accent-dark)}
+  .v2verdict{font-size:.95rem;color:#3A362E;margin-bottom:.9rem}
+
+  /* ─── В3: тёмная лента ─── */
+  .v3note{margin:22px 0 18px;font-size:.97rem;color:var(--muted);max-width:66ch;border-left:3px solid var(--accent);padding-left:14px}
+  .ribbon{background:var(--graphite);border-radius:24px;padding:1.5rem 1.7rem;display:grid;
+    grid-template-columns:auto 1fr auto;gap:1.4rem;align-items:center;color:#EDE9DF}
+  .rb-l .k{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#8E887B;margin-bottom:.35rem}
+  .rb-l b{display:block;font-size:1.3rem;font-weight:900;color:#fff;line-height:1.1}
+  .rb-l i{font-style:normal;font-size:1.05rem;font-weight:800;color:#FF7A2D}
+  .rb-m{display:flex;flex-wrap:wrap;gap:.5rem}
+  .rb-m span{font-size:.85rem;font-weight:700;padding:.42rem .8rem;border-radius:999px;
+    border:1px solid #3A362E;color:#CFC9BE;background:#211F1B}
+  .rb-m span.no{border-color:rgba(255,122,45,.45);color:#FFB183}
+  .rb-r .btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--accent);color:#111;
+    font-weight:800;font-size:.95rem;padding:.85rem 1.4rem;border-radius:999px;text-decoration:none;white-space:nowrap}
+  .rb-sub{grid-column:1/-1;font-size:.92rem;color:#A9A296;border-top:1px solid #302D28;padding-top:.9rem;margin-top:.2rem}
+
+  @media(max-width:900px){
+    .funnel{grid-template-columns:1fr 1fr}.step::after{display:none}
+    .replist{grid-template-columns:1fr}.repline:nth-child(odd){border-right:none}
+    .v2box{grid-template-columns:1fr}.v2left{border-right:none;border-bottom:1px solid var(--line)}
+    .v2conn::before,.v2conn::after{left:50%}
+    .ribbon{grid-template-columns:1fr;gap:1rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <h1>Блок «Почему из тысяч остаётся десять» — <b>три решения</b></h1>
+    <p>Верх блока (заголовок и четыре карточки) везде одинаковый и не меняется. Отличается только то, что идёт под ними: текст про третью ступень и пример разбора. Тексты не менял, фото ноутбука убрано во всех трёх.</p>
+  </div>
+</div>
+
+<!-- ВАРИАНТ 1 -->
+<div class="vari"><div class="wrap">
+  <div class="vlab"><span class="chip">Вариант 1</span><h2>Мини-отчёт</h2></div>
+  <p class="vdesc">Пример разбора выглядит как настоящий отчёт проверки: шапка с объектом и ценой, плюсы и минусы по строкам, вердикт снизу. Ровно то, что агентство обещает делать по каждому объекту.</p>
+  <div class="stage">
+    <span class="eyebrow">Как мы отбираем</span>
+    <h3 class="h2big">Почему из тысяч остаётся десять</h3>
+    <div class="funnel">
+      <div class="step"><span class="stepno">01</span><h3>Весь рынок</h3><p>341 новостройка, вторичка и закрытые предложения от партнёров.</p></div>
+      <div class="step"><span class="stepno">02</span><h3>Фильтр по задаче</h3><p>Для жизни, под сдачу или под перепродажу — критерии разные.</p></div>
+      <div class="step"><span class="stepno">03</span><h3>Проверка по 42 пунктам</h3><p>Цена, застройщик, документы, окружение, расходы после покупки.</p></div>
+      <div class="step dark"><span class="stepno">04</span><h3>Десять вариантов</h3><p>С ценами, условиями и минусами каждого.</p></div>
+    </div>
+    <p class="v1note">Чаще всего объект не проходит третью ступень: цена выше, чем реально платили в районе, сроки уже сдвигались или рядом согласована стройка.</p>
+    <div class="repcard">
+      <div class="rephead">
+        <div><div class="t">Пример разбора</div><div class="n">ЖК «Событие»</div></div>
+        <div class="p">28,4 млн ₽</div>
+      </div>
+      <div class="replist">
+        <div class="repline"><span class="mk plus">+</span><span>Цена на 6% ниже соседних корпусов</span></div>
+        <div class="repline"><span class="mk minus">−</span><span>Два года стройки под окнами</span></div>
+        <div class="repline"><span class="mk minus">−</span><span>Тариф управляющей компании выше районного</span></div>
+        <div class="repline"><span class="mk plus">+</span><span>Застройщик без сдвигов сроков за 5 лет</span></div>
+      </div>
+      <div class="repfoot">
+        <b>Вывод: подойдёт тем, кто покупает надолго</b>
+        <a class="lnk" href="#">Читать разбор целиком →</a>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ВАРИАНТ 2 -->
+<div class="vari"><div class="wrap">
+  <div class="vlab"><span class="chip">Вариант 2</span><h2>Раскрытая третья ступень</h2></div>
+  <p class="vdesc">Текст про отсев больше не висит сам по себе: линия ведёт от карточки 03 вниз, и пример показан как то, что происходит именно на этой ступени. Слева причина отсева, справа живой объект с тегами.</p>
+  <div class="stage">
+    <span class="eyebrow">Как мы отбираем</span>
+    <h3 class="h2big">Почему из тысяч остаётся десять</h3>
+    <div class="funnel">
+      <div class="step"><span class="stepno">01</span><h3>Весь рынок</h3><p>341 новостройка, вторичка и закрытые предложения от партнёров.</p></div>
+      <div class="step"><span class="stepno">02</span><h3>Фильтр по задаче</h3><p>Для жизни, под сдачу или под перепродажу — критерии разные.</p></div>
+      <div class="step"><span class="stepno">03</span><h3>Проверка по 42 пунктам</h3><p>Цена, застройщик, документы, окружение, расходы после покупки.</p></div>
+      <div class="step dark"><span class="stepno">04</span><h3>Десять вариантов</h3><p>С ценами, условиями и минусами каждого.</p></div>
+    </div>
+    <div class="v2wrap">
+      <div class="v2conn"></div>
+      <div class="v2box">
+        <div class="v2left">
+          <div class="k">Что отсеивается на третьей ступени</div>
+          <p>Чаще всего объект не проходит третью ступень: цена выше, чем реально платили в районе, сроки уже сдвигались или рядом согласована стройка.</p>
+        </div>
+        <div class="v2right">
+          <div class="k">Пример разбора</div>
+          <div class="v2obj"><b>ЖК «Событие»</b><i>28,4 млн ₽</i></div>
+          <div class="tags">
+            <span class="tag ok">−6% к соседним корпусам</span>
+            <span class="tag no">2 года стройки под окнами</span>
+            <span class="tag no">тариф УК выше районного</span>
+          </div>
+          <p class="v2verdict">Подойдёт тем, кто покупает надолго.</p>
+          <a class="lnk" href="#">Читать разбор целиком →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ВАРИАНТ 3 -->
+<div class="vari" style="padding-bottom:60px"><div class="wrap">
+  <div class="vlab"><span class="chip">Вариант 3</span><h2>Тёмная лента</h2></div>
+  <p class="vdesc">Пример сжат в одну горизонтальную полосу в цвет карточки 04: объект и цена слева, короткие теги по центру, кнопка справа. Занимает мало места и рифмуется с финальной чёрной карточкой степпера.</p>
+  <div class="stage">
+    <span class="eyebrow">Как мы отбираем</span>
+    <h3 class="h2big">Почему из тысяч остаётся десять</h3>
+    <div class="funnel">
+      <div class="step"><span class="stepno">01</span><h3>Весь рынок</h3><p>341 новостройка, вторичка и закрытые предложения от партнёров.</p></div>
+      <div class="step"><span class="stepno">02</span><h3>Фильтр по задаче</h3><p>Для жизни, под сдачу или под перепродажу — критерии разные.</p></div>
+      <div class="step"><span class="stepno">03</span><h3>Проверка по 42 пунктам</h3><p>Цена, застройщик, документы, окружение, расходы после покупки.</p></div>
+      <div class="step dark"><span class="stepno">04</span><h3>Десять вариантов</h3><p>С ценами, условиями и минусами каждого.</p></div>
+    </div>
+    <p class="v3note">Чаще всего объект не проходит третью ступень: цена выше, чем реально платили в районе, сроки уже сдвигались или рядом согласована стройка.</p>
+    <div class="ribbon">
+      <div class="rb-l">
+        <div class="k">Пример разбора</div>
+        <b>ЖК «Событие»</b><i>28,4 млн ₽</i>
+      </div>
+      <div class="rb-m">
+        <span>−6% к соседям</span>
+        <span class="no">2 года стройки</span>
+        <span class="no">тариф УК выше</span>
+      </div>
+      <div class="rb-r"><a class="btn" href="#">Читать разбор целиком</a></div>
+      <div class="rb-sub">Подойдёт тем, кто покупает надолго.</div>
+    </div>
+  </div>
+</div></div>
+
+</body>
+</html>
