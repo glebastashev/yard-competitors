@@ -84,10 +84,20 @@
   }
 
   body{background:#F4F3F0}
-  .page{max-width:74rem;margin:0 auto;padding:70px 32px 80px}
-  .hint{max-width:74rem;margin:0 auto;padding:22px 32px 0;color:#908A80;font-size:13px}
+  .bar{background:#1A1916;color:#B7B2A6;font-size:13px;padding:12px 0}
+  .bar .in{max-width:74rem;margin:0 auto;padding:0 32px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .bar b{color:#fff;font-weight:800}
+  .bar a{color:#B7B2A6;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.25)}
+  .bar a.on{color:#EE6B24;border-color:#EE6B24;font-weight:800}
+  .page{max-width:74rem;margin:0 auto;padding:64px 32px 90px}
 </style></head><body>
-<div class="hint">Вариант 3 отдельно, как будет на сайте: фон страницы, ширина контейнера сайта, без служебной рамки.</div>
+<div class="bar"><div class="in">
+  <b>Вариант 3 · Таблица с миниатюрами</b>
+  <span>другие:</span>
+  <a href="price-v1.html">1 · прайс-строки</a>
+  <a href="price-v2.html">2 · карточки</a>
+  <a href="price-v3.html" class="on">3 · таблица</a>
+</div></div>
 <div class="page">
     <span class="eyebrow">Деньги</span><h3 class="h2big">Сколько стоит наша работа</h3>
     <div class="tbl">
