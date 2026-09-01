@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ярд — процесс, вариант 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#F4F3F0;--surface:#FFFFFF;--ink:#141414;--muted:#6F6B63;--faint:#908A80;
+    --line:#E4DED3;--accent:#EE6B24;--accent-dark:#BF4F16;--soft:#FFF3EA;--graphite:#1A1916}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .bar{background:var(--graphite);color:#B7B2A6;font-size:13px;padding:12px 0}
+  .bar .in{max-width:74rem;margin:0 auto;padding:0 32px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .bar b{color:#fff;font-weight:800}
+  .bar a{color:#B7B2A6;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.25);margin-right:10px}
+  .bar a.on{color:var(--accent);border-color:var(--accent);font-weight:800}
+  .page{max-width:74rem;margin:0 auto;padding:52px 32px 78px}
+  .eyebrow{display:inline-block;color:var(--accent);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:12px}
+  .eyebrow::before{content:"";display:inline-block;width:22px;height:2px;background:var(--accent);vertical-align:middle;margin-right:10px}
+  h2.big{font-size:clamp(1.9rem,3.4vw,2.9rem);font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:1.6rem}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#111;
+    font-weight:800;font-size:.98rem;padding:.95rem 1.7rem;border-radius:999px;text-decoration:none}
+
+  /* A — карточки со сроком */
+  .cards5{display:grid;grid-template-columns:repeat(5,1fr);gap:.9rem}
+  .sc{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:1.3rem 1.2rem 1.4rem;position:relative}
+  .sc .tm{display:inline-block;background:var(--soft);border:1px solid rgba(238,107,36,.32);border-radius:999px;
+    padding:.25rem .7rem;font-size:.74rem;font-weight:800;color:var(--accent-dark);margin-bottom:.7rem}
+  .sc b{display:block;font-size:1.08rem;font-weight:900;margin-bottom:.28rem}
+  .sc span{font-size:.86rem;color:var(--muted);line-height:1.4}
+  .sc.last{background:var(--graphite);border-color:var(--graphite)}
+  .sc.last b{color:#fff}.sc.last span{color:#C9C3B8}
+  .sc.last .tm{background:rgba(238,107,36,.16);border-color:rgba(238,107,36,.45);color:#FF9A5C}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:1.6rem;flex-wrap:wrap;
+    margin-top:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:1.2rem 1.6rem}
+  .foot p{font-size:.95rem;color:#3A362E;max-width:60ch;margin:0}
+
+  /* B — таймлайн со шкалой времени */
+  .tline{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1.6rem 1.8rem 1.5rem}
+  .trow{display:grid;grid-template-columns:repeat(5,1fr);position:relative;padding-top:2.3rem}
+  .trow::before{content:"";position:absolute;left:4%;right:4%;top:2.05rem;height:2px;
+    background:linear-gradient(90deg,rgba(238,107,36,.3),var(--accent))}
+  .ti{position:relative;padding-right:1rem}
+  .ti .tm{position:absolute;top:-2.3rem;left:0;font-size:.82rem;font-weight:900;color:var(--accent-dark)}
+  .ti .dt{position:absolute;top:-.42rem;left:0;width:12px;height:12px;border-radius:50%;
+    background:var(--surface);border:3px solid var(--accent)}
+  .ti b{display:block;font-size:1rem;font-weight:900;margin:1.1rem 0 .2rem}
+  .ti span{font-size:.85rem;color:var(--muted);line-height:1.35}
+  .ti.fin .dt{background:var(--accent)}
+  .tnote{margin-top:1.4rem;padding-top:1.1rem;border-top:1px dashed rgba(238,107,36,.35);
+    display:flex;justify-content:space-between;gap:1.6rem;align-items:center;flex-wrap:wrap}
+  .tnote p{font-size:.93rem;color:#4A463D;max-width:58ch;margin:0}
+
+  /* C — этапы списком с крупным сроком */
+  .list5{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+  .li{display:grid;grid-template-columns:150px 1fr auto;gap:1.5rem;align-items:center;
+    padding:1.1rem 1.7rem;border-bottom:1px solid var(--line)}
+  .li:last-of-type{border-bottom:none}
+  .li .tm{font-size:1.35rem;font-weight:900;color:var(--accent);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .li b{font-size:1.05rem;font-weight:900}
+  .li span{font-size:.9rem;color:var(--muted)}
+  .li .n{font-size:.72rem;font-weight:800;color:var(--faint);letter-spacing:.1em}
+  .li.fin{background:var(--soft)}
+  .lfoot{background:var(--graphite);color:#EDE9DF;padding:1.2rem 1.7rem;display:flex;
+    justify-content:space-between;align-items:center;gap:1.6rem;flex-wrap:wrap}
+  .lfoot p{font-size:.95rem;color:#C9C3B8;max-width:56ch;margin:0}
+
+  @media(max-width:900px){
+    .cards5,.trow{grid-template-columns:1fr;gap:1rem}
+    .trow{padding-top:0}.trow::before{display:none}
+    .ti{padding:0 0 0 1.6rem}.ti .dt{left:0;top:.35rem}.ti .tm{position:static;display:block;margin-bottom:.15rem}
+    .ti b{margin-top:0}
+    .li{grid-template-columns:1fr;gap:.35rem}
+  }
+</style></head><body>
+<div class="bar"><div class="in"><b>Вариант 3 · Список этапов</b><span>срок крупной цифрой слева, всё в одной таблице</span>
+<span style="margin-left:auto">другие:</span><a href="flow-v1.html">1 · карточки со сроком</a><a href="flow-v2.html">2 · шкала времени</a><a href="flow-v3.html" class='on'>3 · список этапов</a></div></div>
+<div class="page"><p class="eyebrow">Процесс</p><h2 class="big">Что будет после заявки</h2>
+<div class="list5"><div class="li"><div class="tm">20 минут</div><div><b>Разговор</b> <span>· Бюджет, район, сроки</span></div><div class="n">01</div></div><div class="li"><div class="tm">2 дня</div><div><b>Подборка</b> <span>· 10 вариантов с минусами</span></div><div class="n">02</div></div><div class="li"><div class="tm">Один день</div><div><b>Просмотры</b> <span>· Собираем маршрут</span></div><div class="n">03</div></div><div class="li"><div class="tm">До брони</div><div><b>Проверка</b> <span>· Отчёт письменно</span></div><div class="n">04</div></div><div class="li fin"><div class="tm">До ключей</div><div><b>Сделка</b> <span>· Сопровождаем</span></div><div class="n">05</div></div>
+      <div class="lfoot"><p>Отвечаем за 2 часа, отчёт по пятницам. Выйти можно на любом этапе — без неустойки и объяснений.</p><a class="btn" href="#">Начать с разговора на 20 минут</a></div></div></div></body></html>
