@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ярд — инвестиции, вариант 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#F4F3F0;--surface:#FFFFFF;--cream:#FFFDF8;--ink:#141414;--muted:#6F6B63;--faint:#908A80;
+    --line:#E4DED3;--accent:#EE6B24;--accent-dark:#BF4F16;--soft:#FFF3EA;--graphite:#1A1916}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .bar{background:var(--graphite);color:#B7B2A6;font-size:13px;padding:12px 0}
+  .bar .in{max-width:74rem;margin:0 auto;padding:0 32px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .bar b{color:#fff;font-weight:800}
+  .bar a{color:#B7B2A6;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.25);margin-right:10px}
+  .bar a.on{color:var(--accent);border-color:var(--accent);font-weight:800}
+  .page{max-width:74rem;margin:0 auto;padding:52px 32px 78px}
+  .eyebrow{display:inline-block;color:var(--accent);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:12px}
+  .eyebrow::before{content:"";display:inline-block;width:22px;height:2px;background:var(--accent);vertical-align:middle;margin-right:10px}
+  h2{font-size:clamp(1.9rem,3.3vw,2.7rem);font-weight:900;line-height:1.03;letter-spacing:-.02em;margin-bottom:.9rem;max-width:20ch}
+  p.sub{font-size:1rem;color:#4A463D;margin-bottom:.8rem;line-height:1.6}
+  .btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.3rem}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#111;
+    font-weight:800;font-size:.95rem;padding:.9rem 1.6rem;border-radius:999px;text-decoration:none}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+
+  /* A — светлая карточка + цифра плашкой */
+  .ia{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:2.1rem 2.2rem;
+    display:grid;grid-template-columns:1.35fr .65fr;gap:2.2rem;align-items:start}
+  .ia-num{background:var(--soft);border:1px solid rgba(238,107,36,.32);border-radius:20px;padding:1.5rem 1.4rem;text-align:center}
+  .ia-num b{display:block;font-size:clamp(2.6rem,5vw,3.6rem);font-weight:900;color:var(--accent);
+    line-height:1;letter-spacing:-.03em;margin-bottom:.6rem}
+  .ia-num span{font-size:.86rem;color:#5A544C;line-height:1.4}
+
+  /* B — две стратегии */
+  .ib-top{max-width:62ch;margin-bottom:1.5rem}
+  .strat{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+  .st{border-radius:22px;padding:1.5rem 1.6rem;border:1px solid var(--line);background:var(--surface)}
+  .st .k{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;margin-bottom:.7rem;color:var(--faint)}
+  .st .big{font-size:2.4rem;font-weight:900;line-height:1;letter-spacing:-.03em;margin-bottom:.5rem}
+  .st p{font-size:.92rem;color:#4A463D;line-height:1.5;margin:0}
+  .st.old{background:#F1EEE8}
+  .st.old .big{color:#8E887B}
+  .st.new{background:var(--soft);border-color:rgba(238,107,36,.4)}
+  .st.new .big{color:var(--accent)}
+  .st.new .k{color:var(--accent-dark)}
+
+  /* C — цифра в шапке карточки */
+  .ic{background:var(--surface);border:1px solid var(--line);border-radius:26px;overflow:hidden}
+  .ic-head{background:var(--soft);border-bottom:1px solid rgba(238,107,36,.28);padding:1.4rem 2.2rem;
+    display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+  .ic-head b{font-size:clamp(2.2rem,4vw,3rem);font-weight:900;color:var(--accent);line-height:1;letter-spacing:-.03em}
+  .ic-head span{font-size:.95rem;color:#5A544C;max-width:34ch;line-height:1.4}
+  .ic-body{padding:1.8rem 2.2rem 2rem}
+  .ic-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem}
+
+  @media(max-width:900px){.ia,.strat,.ic-cols{grid-template-columns:1fr}}
+</style></head><body>
+<div class="bar"><div class="in"><b>Вариант 2 · Две стратегии</b><span>перепродажа против аренды: две карточки с цифрами</span>
+<span style="margin-left:auto">другие:</span><a href="inv-v1.html">1 · светлая карточка</a><a href="inv-v2.html" class='on'>2 · две стратегии</a><a href="inv-v3.html">3 · цифра в шапке</a></div></div>
+<div class="page"><div class="ib-top"><p class="eyebrow">Инвестиции</p><h2>Покупаете, чтобы заработать, а не чтобы жить?</h2></div>
+    <div class="strat">
+      <div class="st old"><span class="k">Раньше работало</span><div class="big">−21%</div>
+        <p>Раньше схема была простой: купить дешевле на этапе стройки и продать дороже, когда дом достроят. Сейчас так почти не получается — цены на старте уже высокие, и продать чаще выходит себе в убыток. За прошлый год таких перепродаж стало на 21% меньше.</p></div>
+      <div class="st new"><span class="k">Работает сейчас</span><div class="big">5–10%</div>
+        <p>Работает другое: купить и сдавать. Это 5–10% в год — если считать честно, вместе с ремонтом, налогом и месяцами, когда квартира стоит пустая. Застройщики обещают 15% и больше, потому что этих расходов в их расчёте просто нет.</p></div>
+    </div>
+    <div class="btns"><a class="btn" href="#">Посчитать доходность</a><a class="btn ghost" href="#">Подробнее об инвестициях</a></div></div></body></html>
