@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ярд — форма, вариант 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#F4F3F0;--surface:#FFFFFF;--cream:#FFFDF8;--ink:#141414;--muted:#6F6B63;--faint:#908A80;
+    --line:#E4DED3;--accent:#EE6B24;--accent-dark:#BF4F16;--soft:#FFF3EA;--graphite:#1A1916}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .bar{background:var(--graphite);color:#B7B2A6;font-size:13px;padding:12px 0}
+  .bar .in{max-width:74rem;margin:0 auto;padding:0 32px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .bar b{color:#fff;font-weight:800}
+  .bar a{color:#B7B2A6;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.25);margin-right:10px}
+  .bar a.on{color:var(--accent);border-color:var(--accent);font-weight:800}
+  .page{max-width:74rem;margin:0 auto;padding:52px 32px 78px}
+  h2{font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:.5rem}
+  .sub{font-size:1rem;color:var(--muted);margin-bottom:1.3rem}
+  .fine{font-size:.8rem;color:var(--faint);margin-top:.9rem;line-height:1.45}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#111;
+    font-weight:800;font-size:.95rem;padding:.85rem 1.6rem;border-radius:999px;border:none;cursor:pointer;
+    text-decoration:none;font-family:inherit;white-space:nowrap}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.9rem}
+  .fields input,.fields select{height:52px;background:var(--cream);border:1px solid var(--line);
+    border-radius:14px;padding:0 1rem;font:inherit;font-size:.95rem;color:var(--ink);width:100%}
+  .formbtns{display:flex;gap:.6rem;flex-wrap:wrap}
+
+  /* A — форма слева, направления справа одной карточкой */
+  .fa{background:var(--surface);border:1px solid var(--line);border-radius:26px;
+    display:grid;grid-template-columns:1.2fr .8fr;overflow:hidden}
+  .fa-form{padding:2rem 2.1rem}
+  .fa-side{background:var(--paper);border-left:1px solid var(--line);padding:1.6rem 1.7rem}
+  .fa-side .k{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    font-weight:800;color:var(--faint);margin-bottom:.9rem}
+  .fa-side a{display:block;text-decoration:none;color:inherit;padding:.75rem 0;border-bottom:1px dashed var(--line)}
+  .fa-side a:last-child{border-bottom:none}
+  .fa-side b{display:block;font-size:.95rem;font-weight:800;margin-bottom:.15rem}
+  .fa-side span{font-size:.83rem;color:var(--muted);line-height:1.35}
+  .fa-side a:hover b{color:var(--accent-dark)}
+
+  /* B — широкая форма, направления полосой снизу */
+  .fb{background:var(--surface);border:1px solid var(--line);border-radius:26px;overflow:hidden}
+  .fb-top{padding:2rem 2.1rem}
+  .fb .fields{grid-template-columns:repeat(4,1fr)}
+  .fb-also{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--paper)}
+  .fb-also a{text-decoration:none;color:inherit;padding:1.1rem 1.3rem;border-right:1px solid var(--line)}
+  .fb-also a:last-child{border-right:none}
+  .fb-also b{display:block;font-size:.92rem;font-weight:800;margin-bottom:.15rem}
+  .fb-also span{font-size:.81rem;color:var(--muted);line-height:1.3}
+  .fb-also a:hover{background:var(--soft)}
+
+  /* C — тёмная форма, направления карточками внутри */
+  .fc{background:var(--graphite);border-radius:26px;padding:2rem 2.1rem;display:grid;
+    grid-template-columns:1.1fr .9fr;gap:2rem}
+  .fc h2{color:#fff}
+  .fc .sub{color:#B7B0A4}
+  .fc .fields input,.fc .fields select{background:#221F1B;border-color:#34302A;color:#EDE9DF}
+  .fc .fields input::placeholder{color:#8E887B}
+  .fc .btn.ghost{border-color:#3C382F;color:#EDE9DF}
+  .fc .fine{color:#8E887B}
+  .fc-side .k{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    font-weight:800;color:var(--accent);margin-bottom:.8rem}
+  .fc-side a{display:block;text-decoration:none;background:#221F1B;border:1px solid #34302A;border-radius:14px;
+    padding:.85rem 1rem;margin-bottom:.55rem}
+  .fc-side b{display:block;font-size:.92rem;font-weight:800;color:#fff;margin-bottom:.12rem}
+  .fc-side span{font-size:.8rem;color:#A9A296;line-height:1.3}
+  .fc-side a:hover{border-color:rgba(238,107,36,.5)}
+
+  @media(max-width:900px){
+    .fa,.fc{grid-template-columns:1fr}
+    .fa-side{border-left:none;border-top:1px solid var(--line)}
+    .fb .fields,.fb-also{grid-template-columns:1fr 1fr}
+    .fields{grid-template-columns:1fr}
+  }
+</style></head><body>
+<div class="bar"><div class="in"><b>Вариант 1 · Форма и направления рядом</b><span>одна карточка: слева форма, справа список направлений</span>
+<span style="margin-left:auto">другие:</span><a href="form-v1.html" class='on'>1 · форма и направления рядом</a><a href="form-v2.html">2 · широкая форма, полоса снизу</a><a href="form-v3.html">3 · тёмная карточка</a></div></div>
+<div class="page"><div class="fa">
+      <div class="fa-form"><h2>Расскажите, что ищете</h2><p class="sub">Ответим за 2 часа, подборка — за 2 дня. Без звонков «просто уточнить».</p>
+        <div class="fields"><select><option>Что нужно</option><option>Купить</option><option>Продать</option><option>Сдать</option><option>Инвестировать</option></select>
+        <input placeholder="Бюджет или адрес"><input placeholder="Имя"><input placeholder="Телефон"></div><div class="formbtns"><button class="btn" type="button">Отправить</button>
+        <a class="btn ghost" href="#">Telegram</a><a class="btn ghost" href="#">WhatsApp</a></div>
+        <p class="fine">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p></div>
+      <div class="fa-side"><span class="k">Ещё направления</span><a href="#commercial"><b>Коммерческая недвижимость</b><span>Помещения, офисы, готовый арендный бизнес</span></a><a href="#secondary"><b>Вторичка</b><span>18 пунктов юридической проверки</span></a><a href="#"><b>Загородная</b><span>Дома и участки в ближнем Подмосковье</span></a><a href="#about"><b>Разборы и аналитика</b><span>Что мы считаем и проверяем в работе</span></a></div>
+    </div></div></body></html>
