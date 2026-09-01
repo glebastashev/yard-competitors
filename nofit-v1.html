@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ярд — «когда мы не нужны», вариант 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#F4F3F0;--surface:#FFFFFF;--ink:#141414;--muted:#6F6B63;--faint:#908A80;
+    --line:#E4DED3;--accent:#EE6B24;--accent-dark:#BF4F16;--soft:#FFF3EA;--graphite:#1A1916;--warn:#BF4F16}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .bar{background:var(--graphite);color:#B7B2A6;font-size:13px;padding:12px 0}
+  .bar .in{max-width:74rem;margin:0 auto;padding:0 32px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .bar b{color:#fff;font-weight:800}
+  .bar a{color:#B7B2A6;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.25);margin-right:10px}
+  .bar a.on{color:var(--accent);border-color:var(--accent);font-weight:800}
+  .page{max-width:74rem;margin:0 auto;padding:52px 32px 78px}
+  .eyebrow{display:inline-block;color:var(--accent);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:12px}
+  .eyebrow::before{content:"";display:inline-block;width:22px;height:2px;background:var(--accent);vertical-align:middle;margin-right:10px}
+  h2.big{font-size:clamp(1.9rem,3.4vw,2.9rem);font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:.6rem}
+  .sub{font-size:1.05rem;color:var(--muted);margin-bottom:1.6rem}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#111;
+    font-weight:800;font-size:.98rem;padding:.95rem 1.7rem;border-radius:999px;text-decoration:none;white-space:nowrap}
+
+  /* A — карточки 2×2 с крестиком */
+  .g22{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .nf{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:1.4rem 1.5rem;
+    display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start}
+  .nf .x{width:26px;height:26px;border-radius:50%;background:var(--soft);border:1px solid rgba(191,79,22,.35);
+    color:var(--warn);font-weight:900;display:grid;place-items:center;font-size:.85rem;line-height:1}
+  .nf b{display:block;font-size:1rem;font-weight:900;line-height:1.25;margin-bottom:.35rem}
+  .nf p{font-size:.9rem;color:#4A463D;line-height:1.5;margin:0}
+  .fitbar{margin-top:1.2rem;background:var(--graphite);border-radius:20px;padding:1.3rem 1.7rem;
+    display:flex;justify-content:space-between;align-items:center;gap:1.6rem;flex-wrap:wrap}
+  .fitbar p{color:#fff;font-size:1.12rem;font-weight:800;margin:0}
+
+  /* B — строгий список с разделителями */
+  .lst{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+  .lrow{display:grid;grid-template-columns:auto 1fr;gap:1.1rem;padding:1.25rem 1.7rem;border-bottom:1px solid var(--line);align-items:start}
+  .lrow:last-of-type{border-bottom:none}
+  .lrow .x{color:var(--warn);font-weight:900;font-size:1rem;padding-top:.15rem}
+  .lrow b{display:block;font-size:1.03rem;font-weight:900;margin-bottom:.25rem;line-height:1.25}
+  .lrow p{font-size:.9rem;color:#4A463D;margin:0;line-height:1.5}
+  .lfit{background:var(--soft);border-top:1px solid rgba(238,107,36,.3);padding:1.3rem 1.7rem;
+    display:flex;justify-content:space-between;align-items:center;gap:1.6rem;flex-wrap:wrap}
+  .lfit p{font-size:1.1rem;font-weight:800;margin:0;color:#2E2A24}
+
+  /* C — контраст «не мы / мы» */
+  .split{display:grid;grid-template-columns:1.25fr .75fr;gap:1.2rem;align-items:stretch}
+  .col-no{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1.5rem 1.7rem}
+  .col-no .k{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--faint);margin-bottom:1rem;display:block}
+  .nfi{padding:.85rem 0;border-bottom:1px dashed var(--line)}
+  .nfi:last-child{border-bottom:none;padding-bottom:0}
+  .nfi b{display:block;font-size:.99rem;font-weight:900;margin-bottom:.2rem;line-height:1.25}
+  .nfi p{font-size:.87rem;color:var(--muted);margin:0;line-height:1.45}
+  .col-yes{background:var(--graphite);border-radius:22px;padding:1.8rem 1.7rem;display:flex;flex-direction:column;justify-content:center;gap:1.1rem}
+  .col-yes .k{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--accent)}
+  .col-yes p{color:#fff;font-size:1.35rem;font-weight:900;line-height:1.2;margin:0}
+  .col-yes .btn{align-self:flex-start}
+
+  @media(max-width:900px){.g22,.split{grid-template-columns:1fr}}
+</style></head><body>
+<div class="bar"><div class="in"><b>Вариант 1 · Карточки 2×2</b><span>четыре случая карточками с крестиком, вывод тёмной плашкой</span>
+<span style="margin-left:auto">другие:</span><a href="nofit-v1.html" class='on'>1 · карточки 2×2</a><a href="nofit-v2.html">2 · строгий список</a><a href="nofit-v3.html">3 · контраст двух колонок</a></div></div>
+<div class="page"><p class="eyebrow">Честно</p><h2 class="big">Когда мы не нужны</h2>
+<p class="sub">Честнее сказать сразу, чем потратить ваше и наше время.</p>
+<div class="g22"><div class="nf"><span class="x">×</span><div><b>Сделку нужно закрыть за неделю.</b><p>Проверка объекта и документов занимает время. Если сроки горят, мы будем вас тормозить — это мучение для обеих сторон.</p></div></div><div class="nf"><span class="x">×</span><div><b>Нужно самое дешёвое любой ценой.</b><p>Мы убираем из подборки то, что потом будет сложно продать, — а это обычно и есть самое дешёвое.</p></div></div><div class="nf"><span class="x">×</span><div><b>Продаёте простую квартиру и готовы водить показы сами.</b><p>Так вы сэкономите комиссию.</p></div></div><div class="nf"><span class="x">×</span><div><b>Ждёте от нас точную дату продажи.</b><p>Её не знает никто, и мы не назовём.</p></div></div></div><div class="fitbar"><p>Если ничего из этого не про вас — давайте работать.</p><a class="btn" href="#">Подобрать варианты</a></div></div></body></html>
