@@ -1178,21 +1178,49 @@ header:not(.hd-ready),header:not(.hd-ready) nav{transition:none !important}
   .progress-top{transition:none}
 }
 
-/* ═══ v58: поп-ап при уходе ═══ */
-.exitbox{max-width:60rem;padding:0;overflow:hidden}
-.exit-pad{padding:2.2rem 2.3rem 2rem}
-.exit-pad h2{margin:.2rem 0 .5rem;font-size:clamp(1.45rem,2.5vw,2rem);max-width:22ch}
-.exit-pad .sub{margin-bottom:1.5rem;max-width:56ch}
-.exit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:20px;overflow:hidden}
-.exit-card{background:var(--surface);padding:1.4rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}
+/* ═══ v60: поп-ап при уходе с превью материалов ═══ */
+.exitbox{max-width:74rem;padding:0;overflow:auto;max-height:92vh}
+.exit-pad{padding:1.9rem 2rem 1.6rem}
+.exit-pad h2{margin:.2rem 0 .5rem;font-size:clamp(1.55rem,2.5vw,2.15rem);max-width:27ch}
+.exit-pad .sub{margin-bottom:1.3rem;max-width:66ch}
+.exit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;background:transparent}
+.exit-card{background:var(--surface);padding:.75rem .75rem 1rem;display:flex;flex-direction:column;gap:.55rem;
+  border:1px solid var(--line);border-radius:18px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.exit-card:hover{border-color:rgba(238,107,36,.45);box-shadow:0 14px 30px rgba(47,38,26,.08);transform:translateY(-2px)}
+.exit-card.is-selected{border-color:var(--accent);box-shadow:0 0 0 2px rgba(238,107,36,.15),0 16px 34px rgba(47,38,26,.1)}
+.exit-preview{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:13px;background:var(--soft)}
+.exit-card-body{padding:.3rem .45rem 0;display:flex;flex-direction:column;gap:.5rem;flex:1}
 .exit-card .exk{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
   font-weight:800;color:var(--accent-dark)}
 .exit-card h3{font-family:var(--display);font-size:1.16rem;font-weight:900;line-height:1.12;margin:0}
-.exit-card p{font-size:.9rem;color:var(--muted);font-weight:500;flex:1}
-.exit-card .btn{align-self:flex-start;margin-top:.5rem}
-.exit-pad .fineprint{margin-top:1.1rem;font-size:.8rem;color:var(--faint);font-weight:500}
-@media(max-width:880px){.exit-grid{grid-template-columns:1fr}.exit-pad{padding:1.6rem 1.3rem 1.5rem}}
+.exit-card p{font-size:.86rem;color:var(--muted);font-weight:500;flex:1;line-height:1.45}
+.exit-card .btn{align-self:stretch;margin-top:.35rem;width:100%}
+.exit-form{margin-top:1rem;padding:1rem 1.1rem 1.05rem;background:var(--cream);border:1px solid var(--line);
+  border-radius:18px;display:grid;grid-template-columns:minmax(220px,1fr) minmax(220px,1.1fr) auto;gap:.7rem;align-items:end}
+.exit-form-copy h3{font-family:var(--display);font-size:1.08rem;font-weight:900;line-height:1.2;margin:0 0 .25rem}
+.exit-selection{font-size:.8rem;color:var(--accent-dark);font-weight:800;margin:0}
+.exit-form input{min-height:52px;border:1px solid var(--line);border-radius:14px;padding:0 1rem;font:inherit;
+  background:var(--surface);box-sizing:border-box;width:100%}
+.exit-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(238,107,36,.14)}
+.exit-form input.bad{border-color:#D14343;background:#FDF3F3}
+.exit-form .btn{min-height:52px;white-space:nowrap}
+.exit-contact-note{grid-column:1/-1;font-size:.76rem;color:var(--faint);font-weight:500;line-height:1.45;margin:.05rem 0 0}
+.exit-done{margin-top:1rem;padding:1.1rem 1.2rem;background:var(--soft);border-left:3px solid var(--accent);border-radius:14px}
+.exit-done h3{font-family:var(--display);font-size:1.15rem;font-weight:900;margin:0 0 .3rem}
+.exit-done p{font-size:.9rem;color:var(--muted);font-weight:500;margin:0}
+@media(max-width:880px){
+  .exitbox{max-width:42rem}
+  .exit-grid{grid-template-columns:1fr}
+  .exit-card{display:grid;grid-template-columns:150px 1fr;align-items:stretch}
+  .exit-preview{height:100%;min-height:174px}
+  .exit-form{grid-template-columns:1fr 1fr}.exit-form-copy{grid-column:1/-1}
+}
+@media(max-width:560px){
+  .exitbox{max-height:94vh}.exit-pad{padding:1.5rem 1rem 1.1rem}.exit-pad .sub{font-size:.9rem}
+  .exit-card{grid-template-columns:112px 1fr}.exit-preview{min-height:158px}.exit-card-body{padding:.15rem .25rem 0}
+  .exit-card p{font-size:.78rem}.exit-card h3{font-size:1.02rem}.exit-card .btn{padding:.7rem .8rem}
+  .exit-form{grid-template-columns:1fr;padding:.9rem}.exit-form-copy,.exit-contact-note{grid-column:auto}
+}
 
 /* ═══ v58: телефон ═══ */
 @media(max-width:620px){
@@ -2634,34 +2662,56 @@ header:not(.hd-ready),header:not(.hd-ready) nav{transition:none !important}
 <div class="progress-top" id="readProgress" aria-hidden="true"></div>
 
 <!-- ═══ Поп-ап при уходе: три материала ═══ -->
-<div class="modal-overlay" id="exitModal" hidden role="dialog" aria-modal="true" aria-labelledby="exitTitle">
+<div class="modal-overlay" id="exitModal" hidden role="dialog" aria-modal="true" aria-labelledby="exitTitle" aria-describedby="exitDescription">
   <div class="modal-box exitbox">
     <button class="modal-close" type="button" id="exitClose" aria-label="Закрыть">&times;</button>
     <div class="exit-pad">
-      <p class="eyebrow">Бесплатно и без звонка</p>
-      <h2 id="exitTitle">Три файла, чтобы проверить объект самому</h2>
-      <p class="sub">То, что мы обычно отдаём на первой встрече. Выберите, что нужно — пришлём сразу.</p>
+      <p class="eyebrow">Бесплатные материалы Moscow Yard</p>
+      <h2 id="exitTitle">Перед уходом заберите файл для проверки квартиры</h2>
+      <p class="sub" id="exitDescription">Выберите свою ситуацию. Пришлём материал в Telegram и уточним, какой объект вы рассматриваете.</p>
       <div class="exit-grid">
         <article class="exit-card">
-          <span class="exk">Новостройки</span>
-          <h3>Чек-лист 42 пункта</h3>
-          <p>Что смотреть в цене, документах, застройщике и районе — и что считать поводом отказаться.</p>
-          <button class="btn sm" type="button" data-lead="Чек-лист: 42 пункта по новостройке">Забрать</button>
+          <img class="exit-preview" src="assets/lead-magnets/01-newbuild-checklist.jpg" alt="Разворот чек-листа проверки новостройки с таблицами, заметками и планом квартиры">
+          <div class="exit-card-body">
+            <span class="exk">Новостройки</span>
+            <h3>Чек-лист 42 пункта</h3>
+            <p>Цена, документы, застройщик и район. Внутри есть красные флаги, при которых лучше отказаться.</p>
+            <button class="btn sm" type="button" data-material="Чек-лист: 42 пункта по новостройке" aria-pressed="false">Выбрать</button>
+          </div>
         </article>
         <article class="exit-card">
-          <span class="exk">Вторичка</span>
-          <h3>18 юридических пунктов</h3>
-          <p>История квартиры, обременения, доли детей и риски со стороны продавца.</p>
-          <button class="btn sm" type="button" data-lead="Чек-лист: 18 юридических пунктов по вторичке">Забрать</button>
+          <img class="exit-preview" src="assets/lead-magnets/02-resale-legal-checklist.jpg" alt="Юридическое досье на квартиру с выпиской, схемой собственников и перечнем рисков">
+          <div class="exit-card-body">
+            <span class="exk">Вторичка</span>
+            <h3>18 юридических пунктов</h3>
+            <p>История квартиры, обременения, доли детей и риски со стороны продавца.</p>
+            <button class="btn sm" type="button" data-material="Чек-лист: 18 юридических пунктов по вторичке" aria-pressed="false">Выбрать</button>
+          </div>
         </article>
         <article class="exit-card">
-          <span class="exk">Разбор рынка</span>
-          <h3>15 проектов с минусами</h3>
-          <p>Пятнадцать московских ЖК: чем хорош каждый и что в нём не так. Без рекламы застройщиков.</p>
-          <button class="btn sm" type="button" data-lead="Разбор 15 проектов с минусами">Забрать</button>
+          <img class="exit-preview" src="assets/lead-magnets/03-market-projects-report.jpg" alt="Аналитический отчёт по жилым комплексам с картой Москвы, рейтингами и сравнительной таблицей">
+          <div class="exit-card-body">
+            <span class="exk">Разбор рынка</span>
+            <h3>15 проектов с минусами</h3>
+            <p>Пятнадцать московских ЖК: сильные стороны каждого и реальные недостатки без рекламы застройщиков.</p>
+            <button class="btn sm" type="button" data-material="Разбор: 15 проектов с минусами" aria-pressed="false">Выбрать</button>
+          </div>
         </article>
       </div>
-      <p class="fineprint">Ничего не рассылаем после. Один файл — один запрос.</p>
+      <form class="exit-form" id="exitForm" hidden novalidate>
+        <div class="exit-form-copy">
+          <h3>Куда отправить выбранный файл?</h3>
+          <p class="exit-selection" id="exitSelection"></p>
+        </div>
+        <input type="text" name="contact" placeholder="Телефон или Telegram" autocomplete="tel" aria-label="Телефон или Telegram">
+        <input type="hidden" name="material" id="exitMaterial">
+        <button class="btn" type="submit">Получить материал</button>
+        <p class="exit-contact-note">После отправки специалист Moscow Yard свяжется с вами и поможет применить материал к вашей ситуации.</p>
+      </form>
+      <div class="exit-done" id="exitDone" hidden aria-live="polite">
+        <h3>Материал выбран</h3>
+        <p>Пришлём его по указанному контакту и уточним детали объекта.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -2834,7 +2884,9 @@ header:not(.hd-ready),header:not(.hd-ready) nav{transition:none !important}
   });
 
   /* поп-ап при уходе с сайта */
-  var ex=document.getElementById('exitModal'), exClose=document.getElementById('exitClose');
+  var ex=document.getElementById('exitModal'), exClose=document.getElementById('exitClose'),
+      exForm=document.getElementById('exitForm'), exDone=document.getElementById('exitDone'),
+      exMaterial=document.getElementById('exitMaterial'), exSelection=document.getElementById('exitSelection');
   if(!ex) return;
   var shown=false;
   try{ shown = sessionStorage.getItem('yardExit')==='1'; }catch(e){}
@@ -2849,8 +2901,40 @@ header:not(.hd-ready),header:not(.hd-ready) nav{transition:none !important}
   exClose.addEventListener('click',closeExit);
   ex.addEventListener('click',function(e){ if(e.target===ex) closeExit(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!ex.hidden) closeExit(); });
-  /* карточки открывают обычную форму заявки — окно ухода при этом закрываем */
-  ex.addEventListener('click',function(e){ if(e.target.closest('[data-lead]')) closeExit(); });
+  ex.addEventListener('click',function(e){
+    var pick=e.target.closest('[data-material]');
+    if(!pick) return;
+    var material=pick.dataset.material;
+    ex.querySelectorAll('[data-material]').forEach(function(btn){
+      var active=btn===pick;
+      btn.setAttribute('aria-pressed',active?'true':'false');
+      btn.textContent=active?'Выбрано':'Выбрать';
+      btn.closest('.exit-card').classList.toggle('is-selected',active);
+    });
+    exMaterial.value=material;
+    exSelection.textContent=material;
+    exForm.hidden=false;
+    exDone.hidden=true;
+    setTimeout(function(){
+      var contact=exForm.querySelector('[name=contact]');
+      var box=ex.querySelector('.exitbox');
+      contact.focus({preventScroll:true});
+      if(box.scrollHeight>box.clientHeight){
+        box.scrollTo({top:Math.max(0,exForm.offsetTop-16),behavior:'smooth'});
+      }
+    },80);
+  });
+
+  exForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var contact=exForm.querySelector('[name=contact]');
+    var bad=!contact.value.trim();
+    contact.classList.toggle('bad',bad);
+    if(bad){ contact.focus(); return; }
+    exForm.hidden=true;
+    exDone.hidden=false;
+    exDone.querySelector('p').textContent='Пришлём «'+exMaterial.value+'» по указанному контакту и уточним детали объекта.';
+  });
 
   var armed=false;
   setTimeout(function(){armed=true},7000);   /* не дёргаем сразу после захода */
